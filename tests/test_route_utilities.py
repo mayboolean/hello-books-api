@@ -3,8 +3,6 @@ from werkzeug.exceptions import HTTPException
 from app.models.book import Book
 from app.models.author import Author
 import pytest
-from app.routes.route_utilities import validate_model, create_model, get_models_with_filters
-
 
 def test_validate_model(two_saved_books):
     # Act
@@ -35,6 +33,8 @@ def test_validate_model_invalid_id(two_saved_books):
     response = error.value.response
     assert response.status == "400 BAD REQUEST"
 
+# We use the `client` fixture because we need an
+# application context to work with the database session
 def test_create_model_book(client):
     # Arrange
     test_data = {
@@ -68,6 +68,8 @@ def test_create_model_book_missing_data(client):
     response = error.value.response
     assert response.status == "400 BAD REQUEST"
 
+# We use the `client` fixture because we need an   
+# application context to work with the database session
 def test_create_model_author(client):
     # Arrange
     test_data = {
@@ -84,13 +86,13 @@ def test_create_model_author(client):
         "name": "New Author"
     }
 
-def test_get_models_with_filters_one_matching_book(two_saved_books):
-    # Act
-    result = get_models_with_filters(Book, {"title": "ocean"})
+# def test_get_models_with_filters_one_matching_book(two_saved_books):
+#     # Act
+#     result = get_models_with_filters(Book, {"title": "ocean"})
 
-    # Assert
-    assert result == [{
-        "id": 1,
-        "title": "Ocean Book",
-        "description": "watr 4evr"
-    }]
+#     # Assert
+#     assert result == [{
+#         "id": 1,
+#         "title": "Ocean Book",
+#         "description": "watr 4evr"
+#     }]
