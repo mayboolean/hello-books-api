@@ -1,4 +1,4 @@
-from app.routes.route_utilities import validate_model, create_model
+from app.routes.route_utilities import validate_model, create_model, get_models_with_filters
 from werkzeug.exceptions import HTTPException
 from app.models.book import Book
 from app.models.author import Author
@@ -86,13 +86,13 @@ def test_create_model_author(client):
         "name": "New Author"
     }
 
-# def test_get_models_with_filters_one_matching_book(two_saved_books):
-#     # Act
-#     result = get_models_with_filters(Book, {"title": "ocean"})
+def test_get_models_with_filters_one_matching_book(two_saved_books):
+    # Act
+    result = get_models_with_filters(Book, {"title": "ocean"})
 
-#     # Assert
-#     assert result == [{
-#         "id": 1,
-#         "title": "Ocean Book",
-#         "description": "watr 4evr"
-#     }]
+    # Assert
+    assert result == [{
+        "id": 1,
+        "title": "Ocean Book",
+        "description": "watr 4evr"
+    }]
